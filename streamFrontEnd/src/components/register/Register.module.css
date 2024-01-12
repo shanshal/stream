@@ -7,15 +7,14 @@
 .container form{
     background-color: white;
     padding: 2rem;
-    border-radius: 1rem;
     width: 450px;
     margin: 0 auto;
     box-shadow: 0 0px 8px 0.5px rgba(141, 135, 135, 0.25);
     height: fit-content;
 }
 .container form h3{
-    font-family: Graphik;
-    color:#4A8BDF;
+    color:var(--backGround);
+    font-size:2rem ;
     text-align: center;
 }
 .container form label:first-of-type{
@@ -31,7 +30,6 @@
 
 .container form input,.container form select{
 border: 1px solid #6B6C6D;
-border-radius: 15px;
 height: 2.3rem;
 padding: 0 0.5rem ;
 margin-bottom: 4px;

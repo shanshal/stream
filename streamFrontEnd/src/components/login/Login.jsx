@@ -1,9 +1,7 @@
 import { useEffect, useReducer, useState } from "react";
 import { useDispatch } from 'react-redux';
-import { authActions} from "../../store/auth-slice";
 import classes from "./Login.module.css";
 import {  useNavigate } from "react-router-dom";
-
 import { errorActions } from "../../store/error-slice";
 const intilistate = {
     emailaddress: "",
@@ -73,16 +71,13 @@ const Login=()=>{
           
       }
       
-if(loading){
-  return <Loader/>
-}
-else{
+
     return (
         <div className={classes.container}>
         <form action="" className=" form">
           <h3>Login</h3>
           <label className="text">
-            Username or Email<span className={classes.star}>*</span>
+             Email<span className={classes.star}>*</span>
           </label>
           <input
             type="text"
@@ -115,7 +110,7 @@ else{
           <div className={classes.button}>
             {" "}
             {error.showError && <p className={classes.errorText}>{error.errorMessage}</p>}
-            <button onClick={onSubmit} disabled={!inputsValid.emailaddress || !inputsValid.password}>Confirm</button>
+            <button onClick={onSubmit} disabled={!inputsValid.emailaddress || !inputsValid.password}>{loading ? "Loading":"Confirm"}</button>
           </div>
         </form>
         <div className={classes.bttmtext}>
@@ -123,5 +118,5 @@ else{
         </div>
       </div>
     );
-}}
+}
 export default Login;

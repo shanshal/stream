@@ -1,3 +1,7 @@
+import { useReducer, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import classes from "./Register.module.css";
 
 const intilistate = {
     emailaddress: "",
@@ -30,8 +34,8 @@ const Register=()=>{
     const navigate=useNavigate();
     const inputsValid = {
         emailaddress: state.emailaddress.length > 0,
-        password: state.password.length > 0,
-        name: state.username.length > 0
+        password: state.password.length > 8,
+        name: state.name.length > 0
     };
     const [loading,setLoading]=useState(false);
     
@@ -66,10 +70,7 @@ const Register=()=>{
           
       }
       
-if(loading){
-  return <Loader/>
-}
-else{
+
     return (
         <div className={classes.container}>
         <form action="" className=" form">
@@ -81,13 +82,13 @@ else{
             type="text"
             placeholder=""
             className="text"
-            name="emailaddress"
+            name="name"
             onChange={onChangeInput}
             onBlur={blurHandler}
             value={state.name}
           />
-          {!inputsValid.emailaddress && state.emailaddresstouched && (
-            <p className={classes.errorText}>Must not be empty!</p>
+          {!inputsValid.name && state.nametouched && (
+            <p className={classes.errorText}>Name must not be empty!</p>
           )}
              <label className="text">
             Email<span className={classes.star}>*</span>
@@ -130,5 +131,5 @@ else{
         </div>
       </div>
     );
-}}
+}
 export default Register;
