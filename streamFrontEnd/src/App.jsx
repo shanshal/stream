@@ -1,10 +1,24 @@
-import NavBar from "./components/NavBar.jsx";
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import { createBrowserRouter,RouterProvider, useLocation, useNavigate, useNavigation, useParams } from 'react-router-dom';
+
+import './App.css'
 
 function App() {
-
+  const router=createBrowserRouter([
+    {
+     path:"/",
+     element:<Root/>,
+     children:[
+       {
+         path:"/",
+         element:<MainPage/>
+       },]}]);
   return (
     <>
-      <NavBar />
+  <RouterProvider router={router}>
+  
+  </RouterProvider>
     </>
   )
 }
