@@ -1,13 +1,15 @@
-import { useEffect, useReducer, useState } from "react";
-import { useDispatch } from 'react-redux';
-import classes from "./Login.module.css";
-import {  useNavigate } from "react-router-dom";
-import { errorActions } from "../../store/error-slice";
+import { useReducer, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import classes from "./Register.module.css";
+
 const intilistate = {
     emailaddress: "",
     emailaddresstouched: false,
     password: "",
     passwordtouched: false,
+    name:"",
+    nametouched:false
   };
   function reducer(state, action) {
     let newstate = {};
@@ -24,19 +26,16 @@ const intilistate = {
     return newstate;
   }
 
-const Login=()=>{
+const Register=()=>{
     const [loginstate,setloginstate]=useState(false);
     const[useer,setuseer]=useState("");
-    const [error,setError]=useState({
-        showError:false,
-        errorMessage:""
-    });
     const [state, dispatch] = useReducer(reducer, intilistate);
     const dispatchRedux=useDispatch();
     const navigate=useNavigate();
     const inputsValid = {
         emailaddress: state.emailaddress.length > 0,
-        password: state.password.length > 0,
+        password: state.password.length > 8,
+        name: state.name.length > 0
     };
     const [loading,setLoading]=useState(false);
     
@@ -65,7 +64,7 @@ const Login=()=>{
 
         }
       catch(e){
-        setError({showError:true,errorMessage:e.title});
+
       }
    
           
@@ -75,9 +74,24 @@ const Login=()=>{
     return (
         <div className={classes.container}>
         <form action="" className=" form">
-          <h3>Login</h3>
+          <h3>Register</h3>
           <label className="text">
-             Email<span className={classes.star}>*</span>
+            Name<span className={classes.star}>*</span>
+          </label>
+          <input
+            type="text"
+            placeholder=""
+            className="text"
+            name="name"
+            onChange={onChangeInput}
+            onBlur={blurHandler}
+            value={state.name}
+          />
+          {!inputsValid.name && state.nametouched && (
+            <p className={classes.errorText}>Name must not be empty!</p>
+          )}
+             <label className="text">
+            Email<span className={classes.star}>*</span>
           </label>
           <input
             type="text"
@@ -109,8 +123,7 @@ const Login=()=>{
           )}
           <div className={classes.button}>
             {" "}
-            {error.showError && <p className={classes.errorText}>{error.errorMessage}</p>}
-            <button onClick={onSubmit} disabled={!inputsValid.emailaddress || !inputsValid.password}>{loading ? "Loading":"Confirm"}</button>
+            <button onClick={onSubmit} disabled={!inputsValid.emailaddress || !inputsValid.password}>Confirm</button>
           </div>
         </form>
         <div className={classes.bttmtext}>
@@ -119,4 +132,4 @@ const Login=()=>{
       </div>
     );
 }
-export default Login;
+export default Register;

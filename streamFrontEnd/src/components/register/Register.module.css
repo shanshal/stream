@@ -13,8 +13,8 @@
     height: fit-content;
 }
 .container form h3{
-    font-family: Graphik;
-    color:#4A8BDF;
+    color:var(--backGround);
+    font-size:2rem ;
     text-align: center;
 }
 .container form label:first-of-type{
