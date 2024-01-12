@@ -1,10 +1,9 @@
 import { useEffect, useReducer, useState } from "react";
 import { useDispatch } from 'react-redux';
-import { authActions, onLogin } from "../../store/auth-slice";
+import { authActions} from "../../store/auth-slice";
 import classes from "./Login.module.css";
 import {  useNavigate } from "react-router-dom";
 
-import Loader from "../UI/Loader/Loader";
 import { errorActions } from "../../store/error-slice";
 const intilistate = {
     emailaddress: "",

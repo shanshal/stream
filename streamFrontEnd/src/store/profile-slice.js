@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { auth } from "./fire";
 const init={}
 const profileSlice=createSlice({
     name:"profile",
