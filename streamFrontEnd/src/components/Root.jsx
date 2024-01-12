@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "./navbar/Navbar.js";
+import Navbar from "./NavBar.jsx";
 import classes from "./Root.module.css"
-import ErrorBox from "./UI/ErrorBox/ErrorBox.js";
+// import ErrorBox from "./UI/ErrorBox/ErrorBox.js";
 import { useDispatch, useSelector } from "react-redux";
 import { errorActions } from "../store/error-slice.js";
+import {useEffect} from "react";
 const Root=()=>{
     const dispatch=useDispatch();
     const showError=useSelector(state=>state.error.showError);
@@ -30,7 +31,7 @@ return(
     {showError &&<div className={classes.backDrop} onClick={divClickHandler}></div>
 }
     <div className={classes.firstContainer}>
-    
+    <Navbar/>
     <main className={classes.main}><Outlet/></main> 
     </div>
     </>
