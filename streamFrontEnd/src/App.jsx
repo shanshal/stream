@@ -3,6 +3,9 @@ import viteLogo from '/vite.svg'
 import { createBrowserRouter,RouterProvider, useLocation, useNavigate, useNavigation, useParams } from 'react-router-dom';
 
 import './App.css'
+import Login from './components/login/Login';
+import Register from './components/register/Regirster';
+import Root from './components/Root';
 
 function App() {
   const router=createBrowserRouter([
@@ -13,7 +16,18 @@ function App() {
        {
          path:"/",
          element:<MainPage/>
-       },]}]);
+
+       },
+      {
+        path:"/Login",
+        element:<Login/>
+      },
+      {
+        
+        path:"Register",
+        element:<Register/>
+      },
+      ]}]);
   return (
     <>
   <RouterProvider router={router}>
