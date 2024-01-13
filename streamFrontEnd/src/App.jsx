@@ -10,6 +10,8 @@ import Movies from './components/movies/Movies';
 import Profile from './components/profile/Profile';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import StreamPage from "./components/StreamPage.jsx";
+
 
 
 function App() {
@@ -58,6 +60,7 @@ function App() {
         path:"/Register",
         element:<Register/>
       },
+
       {
         path:"/Movies",
         element:<Movies/>
@@ -65,6 +68,13 @@ function App() {
         path:"/Profile",
         element:<Profile/>
       }
+
+         {
+             path:"/StreamPage",
+             element:<StreamPage/>
+         }
+      
+      
       ]}]);
   return (
     <>
