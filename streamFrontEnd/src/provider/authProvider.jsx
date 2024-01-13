@@ -6,7 +6,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     // State to hold the authentication token
     const [token, setToken_] = useState(localStorage.getItem("token"));
-    const [isLoggedIn, setIsLoggedIn] = useState(token?true:false);
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
     // Function to set the authentication token
     const setToken = (newToken) => {
         setToken_(newToken);
@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
             localStorage.setItem('token',token);
         } else {
-            setIsLoggedIn(false)
+            setIsLoggedIn(true)
             delete axios.defaults.headers.common["Authorization"];
             localStorage.removeItem('token')
         }

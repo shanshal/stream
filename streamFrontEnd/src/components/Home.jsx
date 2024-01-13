@@ -62,7 +62,7 @@ function Home() {
             <div className={"absolute top-0 left-0 h-full ml-6"}>
                 <div className={"theText flex flex-col justify-evenly h-full"}>
                     <div>
-                        <h1 className={"lg:text-7xl text-xl md:text-5xl m-3"}>
+                        <h1 className={"lg:text-7xl text-xl md:text-5xl m-3 font-bold"}>
                             Welcome to streamy!
                         </h1>
                     </div>

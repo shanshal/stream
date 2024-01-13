@@ -91,7 +91,9 @@ const Login = () => {
     return (
         <div className={classes.container}>
             <form action="" className=" form">
-                <h3>Login</h3>
+                <h1 className={"text-4xl text-black text-center" }>
+                    Login
+                </h1>
                 <label className="text bg-white">
                     Email<span className={classes.star}>*</span>
                 </label>
