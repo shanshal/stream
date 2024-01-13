@@ -21,6 +21,7 @@ const profileSlice=createSlice({
             state.profile=init;
             console.log(state.profile);
             state.loaded=false;
+           
         }
     }
 });

@@ -10,13 +10,12 @@ function NavBar() {
                 </li>
                 <div className={"flex items-center justify-around mx-auto p-4 w-1/2"}>
                     <li>
-                        {/*<Link to={"#"}>Movies</Link>*/}
-                        <a href={"#"}>Movies</a>
+                        <Link to={"/Movies"}>Movies</Link>
 
                     </li>
                     <li>
-                        {/*<Link to={"#"}>Profile</Link>*/}
-                        <a href={"#"}>Profile</a>
+                        <Link to={"/Profile"}>Profile</Link>
+                       
                     </li>
                     <li>
                         {isLoggedIn ?
