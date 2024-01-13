@@ -8,30 +8,7 @@ export default {
         extend: {
         },
         daisyui: {
-            themes: [
-                {
-                    mytheme: {
-
-                        "primary_text": "#F8F9FA",
-
-                        "secondary_text": "#DEE2E6",
-
-                        "sec": "#343A40",
-
-                        "background": "#212529",
-
-                        "base-100": "#6C757D",
-
-                        "info": "#00b8ff",
-
-                        "success": "#00a35a",
-
-                        "warning": "#ffa000",
-
-                        "error": "#ff0051",
-                    },
-                },
-            ],
+            themes: ["synthwave"],
         },
     },
     plugins: [require("daisyui")],
