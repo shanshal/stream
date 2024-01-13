@@ -6,7 +6,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
     // State to hold the authentication token
     const [token, setToken_] = useState(localStorage.getItem("token"));
-
+    const [isLoggedIn, setIsLoggedIn] = useState(token?true:false);
     // Function to set the authentication token
     const setToken = (newToken) => {
         setToken_(newToken);
@@ -14,9 +14,11 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         if (token) {
+            setIsLoggedIn(true)
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
             localStorage.setItem('token',token);
         } else {
+            setIsLoggedIn(false)
             delete axios.defaults.headers.common["Authorization"];
             localStorage.removeItem('token')
         }

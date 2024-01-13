@@ -1,5 +1,10 @@
 import React, {useState, useEffect} from "react";
 import Carousel from "react-simply-carousel";
+import {Link} from "react-router-dom";
+import p1 from "../assets/1.jpg"
+import p2 from "../assets/2.jpg"
+import p3 from "../assets/3.jpg"
+import p4 from "../assets/4.jpg"
 
 function Home() {
     const [activeSlide, setActiveSlide] = useState(0);
@@ -13,7 +18,7 @@ function Home() {
 
         return () => clearInterval(intervalId);
     }, []);
-
+    const imagePaths = [p1, p2, p3, p4];
     return (
         <div className={"w-full relative"}>
             <Carousel
@@ -38,7 +43,7 @@ function Home() {
                         style={{
                             background: "black",
                             width: "100vw",
-                            height: 600,
+                            height: "100vh",
                             textAlign: "center",
                             lineHeight: "240px",
                             boxSizing: "border-box",
@@ -46,9 +51,10 @@ function Home() {
                         key={index}
                     >
                         <img
-                            src={`path/to/your/image-${index}.jpg`} // Replace with the actual path
+                            src={imagePaths[index % imagePaths.length]} // Replace with the actual path
                             alt={`Image ${index}`}
                             style={{maxWidth: "100%", maxHeight: "100%"}}
+                            className={"object-cover w-full h-full"}
                         />
                     </div>
                 ))}
@@ -81,14 +87,11 @@ function Home() {
                         </h1>
                     </div>
                     <div>
-                        <button
+                        <Link
                             className={"btn lg:btn-wide btn-sm sm:btn-sm md:btn-md lg:btn-lg hover:glass"}
-                            onClick={() => {
-                                console.log("Get Started button clicked");
-                            }}
-                        >
+                            to={"/Register"}>
                             Get Started
-                        </button>
+                        </Link>
                     </div>
                 </div>
             </div>

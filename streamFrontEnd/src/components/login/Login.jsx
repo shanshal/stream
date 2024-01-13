@@ -92,7 +92,7 @@ const Login = () => {
         <div className={classes.container}>
             <form action="" className=" form">
                 <h3>Login</h3>
-                <label className="text">
+                <label className="text bg-white">
                     Email<span className={classes.star}>*</span>
                 </label>
                 <input

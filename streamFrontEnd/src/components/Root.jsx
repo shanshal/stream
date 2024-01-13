@@ -9,7 +9,9 @@ import {useEffect} from "react";
 import {useAuth} from "../provider/authProvider.jsx";
 import axios from "axios";
 const Root=()=>{
-    const {token} = useAuth()
+
+    const {token, isLoggedIn} = useAuth()
+
     console.log(token)
     const dispatch=useDispatch();
     const showError=useSelector(state=>state.error.showError);

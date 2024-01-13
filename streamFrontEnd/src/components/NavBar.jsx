@@ -1,8 +1,10 @@
 import {Link} from "react-router-dom";
 import plus from "../assets/plus.svg"
+import {useState} from "react";
+import {useAuth} from "../provider/authProvider.jsx";
 
 function NavBar() {
-    const isLoggedIn = false;
+    const {isLoggedIn, setToken} = useAuth();
     return (
         <div className="navbar bg-base-300 my-2">
             <div className="navbar-start">
@@ -20,6 +22,10 @@ function NavBar() {
                         <li><Link to={"/StreamPage"}>Profile</Link></li>
                         <li><a href={"#"}>Movies</a></li>
                         <li><Link to={"/Featured"}>Featured </Link></li>
+                        <li>
+                            <Link to={"/StreamPage"}>Stream</Link>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -30,8 +36,13 @@ function NavBar() {
                 {isLoggedIn ?
                     <div className={"justify-evenly items-center flex w-1/2"}>
                         <button
-                            className="btn  btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-md text-md md:text-lg lg:text-xl">Log
-                            Out
+                            className="btn  btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-md text-md md:text-lg lg:text-xl"
+                            onClick={() => {
+                                setToken(null);
+                            }}
+                        >
+                            Log Out
+
                         </button>
                         <button
                             className="btn  btn-secondary btn-xs sm:btn-sm md:btn-md lg:btn-md text-md md:text-lg lg:text-xl"
@@ -40,9 +51,9 @@ function NavBar() {
                         <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
                             <div className="modal-box flex flex-col justify-center items-center text-center">
 
-                                    <a href={"#"} className={"flex justify-center items-center"}>
+                                <a href={"#"} className={"flex justify-center items-center"}>
                                     <img src={plus} className={"w-1/2 h-1/2 stroke-0"}/>
-                                    </a>
+                                </a>
                                 <h3 className="font-bold text-lg">Upload your favorite movies here!</h3>
                                 <p className="py-4">Press ESC key or click the button below to close</p>
                                 <div className="modal-action">
