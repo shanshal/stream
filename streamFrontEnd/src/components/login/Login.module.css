@@ -14,8 +14,9 @@
 }
 .container form h3{
     font-family: Graphik;
-    color:#4A8BDF;
+    color:var(--secondary);
     text-align: center;
+    font-size: 2rem;
 }
 .container form label:first-of-type{
     margin-top: 8px;
@@ -36,6 +37,7 @@ margin-bottom: 4px;
 width: 100%;
 font-family: GraphikThin;
 color:#6B6C6D;
+background-color: #fff;
 }
 .container form select{
     text-align: center;
@@ -63,7 +65,7 @@ font-family: GraphikLight;
     text-align: center;
 }
 .container form .button button{
-    background-color:#4A8BDF ;
+    background-color:var(--secondary) ;
     color: white;
     margin: 40px 0 20px 0;
     border: 1px solid #6B6C6D;
@@ -73,7 +75,7 @@ height: 2.4rem;
 font-family: Graphik;
 }
 .container form .button button:hover{
-    color:#4A8BDF;
+    color:var(--secondary);
     background-color: white;
     transition: all 0.1s ease-in;
 }

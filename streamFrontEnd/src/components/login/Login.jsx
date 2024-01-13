@@ -1,9 +1,14 @@
-import {useEffect, useReducer, useState} from "react";
-import {useDispatch} from 'react-redux';
+import { useEffect, useReducer, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import classes from "./Login.module.css";
+import {  Link, useNavigate } from "react-router-dom";
+import { errorActions } from "../../store/error-slice";
+import { onLogin } from "../../store/auth-slice";
+import axios from 'axios';
+import Loader from "../loader/Loader";
 import {useNavigate} from "react-router-dom";
-import {errorActions} from "../../store/error-slice";
 import {useAuth} from "../../provider/authProvider.jsx";
+
 
 
 
@@ -12,22 +17,22 @@ const intilistate = {
     emailaddresstouched: false,
     password: "",
     passwordtouched: false,
-};
-
-function reducer(state, action) {
+  };
+  function reducer(state, action) {
     let newstate = {};
-
+  
     switch (action.type) {
-        case "touch":
-            newstate = {...state, [action.value]: true};
-            break;
-        case "input":
-            newstate = {...state, [action.input]: action.value};
-            break;
-        default:
+      case "touch":
+        newstate = { ...state, [action.value]: true };
+        break;
+      case "input":
+        newstate = { ...state, [action.input]: action.value };
+        break;
+      default:
     }
     return newstate;
-}
+  }
+
 
 const Login = () => {
     const {setToken} = useAuth()
@@ -36,29 +41,48 @@ const Login = () => {
         errorMessage: ""
     });
     const [state, dispatch] = useReducer(reducer, intilistate);
+
     const inputsValid = {
         emailaddress: state.emailaddress.length > 0,
         password: state.password.length > 0,
     };
-    const [loading, setLoading] = useState(false);
-
+    const [loading,setLoading]=useState(false);
+    
     function onChangeInput(e) {
         const action = {
-            type: "input",
-            input: e.target.name,
-            value: e.target.value,
+          type: "input",
+          input: e.target.name,
+          value: e.target.value,
         };
         dispatch(action);
-    }
-
-    const blurHandler = (e) => {
+      }
+      const blurHandler = (e) => {
         const action = {
-            type: "touch",
-            value: e.target.name + "touched",
+          type: "touch",
+          value: e.target.name + "touched",
         };
         dispatch(action);
     };
+ 
 
+    const onSubmit=async (e)=>{ //emailAdress => state.emailaddress , password => state.password
+      e.preventDefault(); 
+      setLoading(true);     
+      
+      try{
+        const response = await axios.post('http://192.168.125.225:8000/api/account/signin', {
+                email: state.emailaddress,
+                  password: state.password,
+      })
+      const data = response.data;
+      dispatchRedux(onLogin({uid:data.token.access,email:data.account.email}))
+      console.log(data.token.access)
+      const token = data.token.access;
+      localStorage.setItem("token", token);
+      navigate("/");
+      }
+      catch(e) {
+  setLoading(false);
 
     const onSubmit = async (e) => { //emailAdress => state.emailaddress , password => state.password
         e.preventDefault();
@@ -86,8 +110,38 @@ const Login = () => {
 
 
     }
-
-
+    // try{
+    //   const result= await fetch("http://172.20.10.5:8000/api/account/signin",
+    //   {
+    //       method: 'POST',
+    //       body: JSON.stringify(
+    //           {
+    //               email: state.emailaddress,
+    //               password: state.password,
+    //           })
+    //   });
+    //   let data = await response.json();
+    //   dispatchRedux(onLogin({uid:data.token.access,email:data.account.email}))
+    //     }
+    //   catch(e){
+    //     setError({showError:true,errorMessage:e.title});
+    //     setLoading(false);
+    //   }
+   
+          
+    //   }
+      
+    useEffect(()=>{
+      if(isLoggedIn){
+        console.log(isLoggedIn);
+        navigate("/");
+      }
+      setInitLoading(false);
+      console.log(isLoggedIn);
+    },[])
+    if(initLoading){
+      return <Loader/>
+    }
     return (
         <div className={classes.container}>
             <form action="" className=" form">
@@ -132,8 +186,9 @@ const Login = () => {
             </form>
             <div className={classes.bttmtext}>
                 <p>Only registered accounts can login.</p>
+
             </div>
-        </div>
+      </div>
     );
 }
 export default Login;
