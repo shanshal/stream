@@ -7,6 +7,7 @@ import Home from './components/Home';
 import Login from './components/login/Login';
 import Register from './components/register/Register';
 import StreamPage from "./components/StreamPage.jsx";
+import Featured from "./components/Featured.jsx";
 
 
 function App() {
@@ -30,6 +31,10 @@ function App() {
          {
              path:"/StreamPage",
              element:<StreamPage/>
+         },
+         {
+             path:"/Featured",
+             element:<Featured/>
          }
       
       

@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./NavBar.jsx";
+import Footer from "./Footer.jsx"
 import classes from "./Root.module.css"
 // import ErrorBox from "./UI/ErrorBox/ErrorBox.js";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,7 +33,8 @@ return(
 }
     <div className={classes.firstContainer}>
     <Navbar/>
-    <main className={classes.main}><Outlet/></main> 
+    <main className={classes.main}><Outlet/></main>
+        <Footer/>
     </div>
     </>
 )
