@@ -5,14 +5,14 @@ function Home() {
     const [activeSlide, setActiveSlide] = useState(0);
 
     useEffect(() => {
-        // Automatically change the active slide every 3 seconds (adjust the interval as needed)
+
         const intervalId = setInterval(() => {
-            setActiveSlide((prevSlide) => (prevSlide + 1) % 10); // Assuming there are 10 slides
+            setActiveSlide((prevSlide) => (prevSlide + 1) % 10);
         }, 3000);
 
-        // Cleanup function to clear the interval when the component is unmounted
+
         return () => clearInterval(intervalId);
-    }, []); // Empty dependency array ensures that the effect runs only once, similar to componentDidMount
+    }, []);
 
     return (
         <div className={"w-full relative"}>
@@ -36,7 +36,7 @@ function Home() {
                     <div
                         className={"opacity-40"}
                         style={{
-                            background: "yellow",
+                            background: "black",
                             width: "100vw",
                             height: 600,
                             textAlign: "center",
@@ -46,34 +46,53 @@ function Home() {
                         key={index}
                     >
                         <img
-                            src={`path/to/your/image-${index}.jpg`} // Replace with the actual path to your images
+                            src={`path/to/your/image-${index}.jpg`} // Replace with the actual path
                             alt={`Image ${index}`}
                             style={{maxWidth: "100%", maxHeight: "100%"}}
                         />
                     </div>
                 ))}
             </Carousel>
-            <div className={"lg:w-1/2 w-3/4 absolute top-0 left-0 h-full ml-6"}>
+            <div className={"absolute top-0 left-0 h-full ml-6"}>
                 <div className={"theText flex flex-col justify-evenly h-full"}>
                     <div>
-                    <h1 className={"lg:text-7xl text-3xl md:text-5xl text-primary_text m-3"}>
-                        Welcome to streamy!
-                    </h1>
+                        <h1 className={"lg:text-7xl text-xl md:text-5xl m-3"}>
+                            Welcome to streamy!
+                        </h1>
                     </div>
                     <div>
-                    <h2 className={"text-xl lg:text-3xl md:text-2xl text-secondary_text m-3"}>
-                        A place to stream your favorite movies with your friends!
-                    </h2>
+                        <h2 className={"text-xl lg:text-md md:text-2xl m-3"}>
+                            A place to stream your favorite movies with your friends!
+                        </h2>
                     </div>
                     <div>
-                    <p className={"text-lg text-secondary_text flex-wrap m-3"}>
-                        Get started by choosing your favorite movie and inviting your friends to watch with you!
-                    </p>
+                        <p className={"text-md flex-wrap m-3"}>
+                            Get started by choosing your favorite movie and inviting your friends to watch with you!
+                        </p>
                     </div>
-
                 </div>
-
             </div>
+
+            <div className={"lg:w-1/2 w-1/4 absolute top-0 right-0 h-full"}>
+                <div className={"flex flex-col items-center justify-center h-full"}>
+                    <div>
+                        <h1 className={"lg:text-2xl text-md md:text-lg m-3"}>
+                            Make an account and open up your own online theater!
+                        </h1>
+                    </div>
+                    <div>
+                        <button
+                            className={"btn btn-wide btn-xs sm:btn-sm md:btn-md lg:btn-lg hover:glass"}
+                            onClick={() => {
+                                console.log("Get Started button clicked");
+                            }}
+                        >
+                            Get Started
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     );
 }

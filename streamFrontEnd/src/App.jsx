@@ -6,6 +6,7 @@ import Root from './components/Root';
 import Home from './components/Home';
 import Login from './components/login/Login';
 import Register from './components/register/Register';
+import StreamPage from "./components/StreamPage.jsx";
 
 
 function App() {
@@ -26,6 +27,10 @@ function App() {
         path:"/Register",
         element:<Register/>
       },
+         {
+             path:"/StreamPage",
+             element:<StreamPage/>
+         }
       
       
       ]}]);
