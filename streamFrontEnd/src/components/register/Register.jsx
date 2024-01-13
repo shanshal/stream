@@ -2,7 +2,7 @@ import {useReducer, useState} from "react";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import classes from "./Register.module.css";
-
+import {useAuth} from "../../provider/authProvider.jsx";
 const intilistate = {
     emailaddress: "",
     emailaddresstouched: false,
@@ -28,6 +28,7 @@ function reducer(state, action) {
 }
 
 const Register = () => {
+    const {setToken} = useAuth()
     const [loginstate, setloginstate] = useState(false);
     const [useer, setuseer] = useState("");
     const [state, dispatch] = useReducer(reducer, intilistate);
@@ -62,18 +63,19 @@ const Register = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            let response = await fetch("http://172.20.10.5:8000/api/account/signup",
+            let response = await fetch("http://192.168.125.225:8000/api/account/signup",
                 {
                     method: 'POST',
                     body: JSON.stringify(
                         {
-                            name: state.name,
+                            contact_name: state.name,
                             email: state.emailaddress,
-                            password: state.password
+                            password1: state.password,
+                            password2: state.password,
                         })
                 });
             let data = await response.json();
-            console.log(data);
+            setToken(data.token.access)
 
         } catch (e) {
             setError({showError: true, errorMessage: e.title});

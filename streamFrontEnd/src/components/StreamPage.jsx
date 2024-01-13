@@ -3,6 +3,7 @@ import ReactPlayer from "react-player";
 import movie from "./movie.mp4"
 
 function StreamPage() {
+
     return (
         <div>
             <div className={"flex-col flex xl:flex-row lg:flex-row md:flex-row justify-center max-h-screen"}>
@@ -69,6 +70,7 @@ function StreamPage() {
                     </div>
                 </div>
             </div>
+
 
 
         </div>

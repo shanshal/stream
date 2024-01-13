@@ -1,6 +1,6 @@
 
 import { createBrowserRouter,RouterProvider, useLocation, useNavigate, useNavigation, useParams } from 'react-router-dom';
-
+import AuthProvider from "./provider/authProvider.jsx";
 import './App.css'
 import Root from './components/Root';
 import Home from './components/Home';
@@ -41,9 +41,13 @@ function App() {
       ]}]);
   return (
     <>
-  <RouterProvider router={router}>
-  
-  </RouterProvider>
+
+        <AuthProvider>
+            <RouterProvider router={router}>
+
+            </RouterProvider>
+        </AuthProvider>
+
     </>
   )
 }
