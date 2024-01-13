@@ -1,8 +1,11 @@
 import React from 'react'
 import ReactPlayer from "react-player";
 import movie from "./movie.mp4"
+import { useNavigate } from 'react-router-dom';
 
 function StreamPage() {
+    const navigate=useNavigate();
+    const user=[];
     return (
         <div>
             <div className={"flex-col flex xl:flex-row lg:flex-row md:flex-col justify-center max-h-screen"}>
@@ -19,7 +22,7 @@ function StreamPage() {
                     <div className={"bottomBar flex w-full bg-base-300 m-2 rounded-md"}>
                         <div className="avatar m-6">
                             <div className="w-16 h-16 rounded-full">
-                                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"/>
+                                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" onClick={navigate(`/PreviewProfile?user=${user}`)}/>
                             </div>
                         </div>
                         <div className={"flex flex-col w-1/2"}>
@@ -34,7 +37,7 @@ function StreamPage() {
                         <div className={"flex flex-col"}>
                             <button className="m-4 btn btn-warning btn-xs sm:btn-sm md:btn-md lg:btn-md ">Subscribe
                             </button>
-                            <button className="m-4 btn btn-info btn-xs sm:btn-sm md:btn-md lg:btn-md ">Share</button>
+                            <button className="m-4 btn btn-info btn-xs sm:btn-sm md:btn-md lg:btn-md ">Create Party</button>
                         </div>
 
                     </div>

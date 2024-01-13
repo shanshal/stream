@@ -1,7 +1,9 @@
-import {useReducer, useState} from "react";
-import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {useEffect, useReducer, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {Link, useNavigate} from "react-router-dom";
 import classes from "./Register.module.css";
+import { authActions, onLogin } from "../../store/auth-slice";
+import Loader from "../loader/Loader";
 
 const intilistate = {
     emailaddress: "",
@@ -9,7 +11,9 @@ const intilistate = {
     password: "",
     passwordtouched: false,
     name: "",
-    nametouched: false
+    nametouched: false,
+    cPassword: "",
+    cPasswordtouched:false,
 };
 
 function reducer(state, action) {
@@ -30,16 +34,21 @@ function reducer(state, action) {
 const Register = () => {
     const [loginstate, setloginstate] = useState(false);
     const [useer, setuseer] = useState("");
+    const isLoggedIn=useSelector((state)=>state.auth.loggedIn);
+    const [initLoading,setInitLoading]=useState(true);
     const [state, dispatch] = useReducer(reducer, intilistate);
     const dispatchRedux = useDispatch();
     const navigate = useNavigate();
     const inputsValid = {
         emailaddress: state.emailaddress.length > 0,
         password: state.password.length > 8,
-        name: state.name.length > 0
+        name: state.name.length > 0,
+        cPassword:state.cPassword === state.password
     };
     const [loading, setLoading] = useState(false);
-
+    const [error,setError]=useState({
+      showError:false,errorMessage:""
+    });
     function onChangeInput(e) {
         const action = {
             type: "input",
@@ -56,45 +65,43 @@ const Register = () => {
         };
         dispatch(action);
     };
-
+    useEffect(()=>{
+        if(isLoggedIn){
+          console.log(isLoggedIn);
+          navigate("/");
+        }
+        setInitLoading(false);
+        console.log(isLoggedIn);
+      },[])
+      if(initLoading){
+        return <Loader/>
+      }
 
     const onSubmit = async (e) => { //emailAdress => state.emailaddress , password => state.password
         e.preventDefault();
         setLoading(true);
         try {
-            let response = await fetch("http://172.20.10.5:8000/api/account/signup",
+            let response = await fetch("http://192.168.125.225:8000/api/account/signup",
                 {
                     method: 'POST',
                     body: JSON.stringify(
                         {
-                            name: state.name,
+                            contact_name: state.name,
                             email: state.emailaddress,
-                            password: state.password
+                            password1: state.password,
+                            password2:state.cPassword
                         })
                 });
             let data = await response.json();
+            dispatchRedux(onLogin({name:state.name,uid:data.token.access,email:data.account.email}))
             console.log(data);
-
+            setLoading(false);
+            navigate("/");
         } catch (e) {
-            setError({showError: true, errorMessage: e.title});
+          console.log(e);
+            setError({showError: true, errorMessage: e.TypeError});
+            setLoading(false);
         }
-
-
-
-
-
-
-
-       // fetch ("http://172.20.10.5:8000/api/account/signup",
-       //     method: 'POST',
-       //      body: JSON.stringify(
-       //      {
-       //          name: state.name,
-       //          email: state.emailaddress,
-       //          password: state.password
-       //      })
-       //     )
-
     }
 
 
@@ -146,16 +153,34 @@ const Register = () => {
                 />
 
                 {!inputsValid.password && state.passwordtouched && (
-                    <p className={classes.errorText}>Password must not be empty!</p>
+                    <p className={classes.errorText}>Password must be longer than 8 characters!</p>
+                )}
+                  <label className="text">
+                   Confirm Password<span className={classes.star}>*</span>
+                </label>
+                <input
+                    type="password"
+                    placeholder="more than 8 characters"
+                    className="text"
+                    name="cPassword"
+                    onChange={onChangeInput}
+                    onBlur={blurHandler}
+                    value={state.cPassword}
+                />
+
+                {!inputsValid.cPassword && state.cPasswordtouched && (
+                    <p className={classes.errorText}>Entered password is not correct!</p>
                 )}
                 <div className={classes.button}>
                     {" "}
-                    <button onClick={onSubmit} disabled={!inputsValid.emailaddress || !inputsValid.password}>Confirm
+                    <p className={classes.errorText}>{error.errorMessage}</p>
+                    {error.showError && <p className={classes.errorText}>{error.errorMessage}</p> }
+                    <button onClick={onSubmit} disabled={!inputsValid.emailaddress || !inputsValid.password || loading || !inputsValid.cPassword} >{loading ? "Loading...":"Confirm"}
                     </button>
                 </div>
             </form>
             <div className={classes.bttmtext}>
-                <p>Only registered accounts can login.</p>
+                already have an Account? <Link to="/Login" className="text-sky-500">Login</Link>
             </div>
         </div>
     );
