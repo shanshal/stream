@@ -11,6 +11,7 @@ import Profile from './components/profile/Profile';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import StreamPage from "./components/StreamPage.jsx";
+import PreviewProfile from './components/profile/PreviewProfile.jsx';
 
 
 
@@ -72,6 +73,10 @@ function App() {
          {
              path:"/StreamPage",
              element:<StreamPage/>
+         },
+         {
+          path:"/PreviewProfile",
+          element:<PreviewProfile/>
          }
       
       

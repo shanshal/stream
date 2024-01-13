@@ -74,6 +74,16 @@ grid-row: 1/7;
     column-gap: 1rem;
     padding: 0.2rem;
 }
+.mCont section:nth-of-type(2) li:first-of-type{
+    background-color: transparent;
+    color: var(--mainText);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 7rem;
+border: 1px solid var(--mainText);
+}
+
 .mCont section:nth-of-type(2) li img{
     grid-row: 1/4;
     height: 7rem;
@@ -82,4 +92,57 @@ grid-row: 1/7;
     grid-row: 1/4;
     align-self: center;
 
+}
+.backDrop{
+    height: 100vh;
+    width: 100vw;
+    top:0;
+    background-color: #929394;
+    opacity: 0.6;
+    z-index: 12;
+    position: fixed;
+}
+.uploadPage{
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+    width: max(20rem,20%);
+    background-color: #fff;
+    color: var(--secondary);
+    z-index: 15;
+    border-radius: 4px;
+    padding: 6px;
+    padding-top: 9px;
+    padding-left: 7px;
+    border-radius: 9px;
+    text-align: start;
+    border-top-right-radius: 0;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+.uploadPage h3{
+    font-size: 1.4rem;
+    align-self: center;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+}
+.uploadPage div{
+    display: flex;
+    flex-direction: column;
+    gap:0.9rem;
+    padding: 1rem;
+}
+.uploadPage button{
+    justify-self: end;
+    align-self: flex-end;
+    background-color: var(--secondary);
+    color: var(--mainText);
+    width: 9rem;
+    height: 2rem;
+    margin-top: 1.4rem;
+}
+.uploadPage button:disabled{
+    background-color: #B8BFC6;
+    color: white;
+    border: none;
 }

@@ -15,7 +15,8 @@ const Root=()=>{
     const divClickHandler=()=>{
         dispatch(errorActions.hideError());
     }
-    useEffect(async ()=>{
+    useEffect(()=>{
+        const checkAuth= async()=>{
         const storedData=localStorage.getItem('IsLoggedIn');
         
           const token=localStorage.getItem('token');
@@ -52,7 +53,8 @@ const Root=()=>{
         //   catch(error){
         //         console.log(error);
         //   }
-        
+        }
+         checkAuth();
     },[])
 return(
     <>

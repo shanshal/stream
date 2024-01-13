@@ -1,10 +1,11 @@
 import { useEffect, useReducer, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import classes from "./Login.module.css";
-import {  useNavigate } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import { errorActions } from "../../store/error-slice";
 import { onLogin } from "../../store/auth-slice";
 import axios from 'axios';
+import Loader from "../loader/Loader";
 
 const intilistate = {
     emailaddress: "",
@@ -29,7 +30,8 @@ const intilistate = {
 
 const Login=()=>{
     const [loginstate,setloginstate]=useState(false);
-    const isLoggedIn=useSelector((state)=>state.auth.loggedIn)
+    const isLoggedIn=useSelector((state)=>state.auth.loggedIn);
+    const [initLoading,setInitLoading]=useState(true);
     const[useer,setuseer]=useState("");
     const [error,setError]=useState({
         showError:false,
@@ -42,7 +44,7 @@ const Login=()=>{
         emailaddress: state.emailaddress.length > 0,
         password: state.password.length > 0,
     };
-    const [loading,setLoading]=useState(true);
+    const [loading,setLoading]=useState(false);
     
     function onChangeInput(e) {
         const action = {
@@ -66,16 +68,20 @@ const Login=()=>{
       setLoading(true);     
       
       try{
-        const response = await axios.post('http://172.20.10.5:8000/api/account/signin', {
+        const response = await axios.post('http://192.168.125.225:8000/api/account/signin', {
                 email: state.emailaddress,
                   password: state.password,
       })
       const data = response.data;
+      dispatchRedux(onLogin({uid:data.token.access,email:data.account.email}))
       console.log(data.token.access)
       const token = data.token.access;
       localStorage.setItem("token", token);
+      navigate("/");
       }
       catch(e) {
+  setLoading(false);
+
         console.log(e);
       }
 
@@ -103,12 +109,16 @@ const Login=()=>{
     //   }
       
     useEffect(()=>{
-      if(!isLoggedIn){
+      if(isLoggedIn){
         console.log(isLoggedIn);
         navigate("/");
       }
+      setInitLoading(false);
       console.log(isLoggedIn);
     },[])
+    if(initLoading){
+      return <Loader/>
+    }
     return (
         <div className={classes.container}>
         <form action="" className=" form">
@@ -151,8 +161,8 @@ const Login=()=>{
           </div>
         </form>
         <div className={classes.bttmtext}>
-          <p>Only registered accounts can login.</p>
-        </div>
+                Don't have an account? <Link to="/Register" className="text-sky-500">Register</Link>
+            </div>
       </div>
     );
 }

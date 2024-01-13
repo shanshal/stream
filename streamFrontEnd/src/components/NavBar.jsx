@@ -1,7 +1,18 @@
-import {Link} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {Link, useNavigate} from "react-router-dom";
+import { authActions } from "../store/auth-slice";
+import { profileActions } from "../store/profile-slice";
 
-function NavBar() {
-    const isLoggedIn = true;
+function NavBar(probs) {
+    const isLoggedIn = useSelector((state)=>state.auth.loggedIn);
+    const dispatch=useDispatch();
+    const navigate=useNavigate();
+    const logoutHandler=()=>{
+        dispatch(authActions.logOut());
+        dispatch(profileActions.logOut());
+        navigate("/");
+    }
+    console.log(probs.isLoading);
     return (
 
         <div className="navbar bg-base-100 my-2">
@@ -28,9 +39,9 @@ function NavBar() {
                 <Link to={"/"} className="btn btn-ghost text-xl lg:text-3xl md:text-2xl">Streamy</Link>
             </div>
             <div className="navbar-end">
-                {isLoggedIn ?
+                {!probs.isLoading ?isLoggedIn ?
                     <div className={"justify-evenly items-center flex w-1/2"}>
-                        <button className="btn  btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-md text-md md:text-lg lg:text-xl">Log Out</button>
+                        <button className="btn  btn-primary btn-xs sm:btn-sm md:btn-md lg:btn-md text-md md:text-lg lg:text-xl" onClick={logoutHandler}>Log Out</button>
                         <button className="btn  btn-secondary btn-xs sm:btn-sm md:btn-md lg:btn-md text-md md:text-lg lg:text-xl">Upload</button>
                     </div>
                     : <div className={" justify-evenly flex w-1/2"}>
@@ -43,7 +54,7 @@ function NavBar() {
                             className={"btn  btn-secondary btn-xs sm:btn-sm md:btn-md lg:btn-md text-md md:text-lg lg:text-xl"}
                             to={"/Register"}>Register</Link>
 
-                    </div>
+                    </div>:""
                 }
             </div>
         </div>

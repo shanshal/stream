@@ -1,7 +1,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import imgNotFound from "../../images/fileNotFound.jpg";
 import classes from "./Profile.module.css"
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import UploadMovie from "./UploadMovie";
 import { useSelector } from "react-redux";
 import Loader from "../loader/Loader";
@@ -24,54 +24,59 @@ const locmovies=[
         describtion:"",
         picture:""
     },]
-const Profile=()=>{
+const PreviewProfile=()=>{
     const [movies,setMovies]=useState([]);
-    const [showUpload,setShowUpload]=useState(false);
-    const isLoggedIn=useSelector((state)=>state.auth.loggedIn);
+    const [userInfo,setUserInfo]=useState(false);
     const [initLoading,setInitLoading]=useState(true);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const [userId, setUserId] = useState((queryParams.get('user')) || '');
     const navigate=useNavigate();
     useEffect(()=>{
-        const fetchMovies=async()=>{
-        try{
-            setMovies(locmovies);
-            setLoading(false);
-        }
-        catch(e){
-
-        }
-    }
-    const subscribeHandler=()=>{
-
-    }
-    fetchMovies();
+       
     },[])
     const movieClickHandler=()=>{
         navigate()
     }
     useEffect(()=>{
-        if(isLoggedIn){
-          console.log(isLoggedIn);
-          navigate("/");
+        const fetchData=async()=>{
+            try{
+                setUserInfo({});
+                setMovies(locmovies);
+                setInitLoading(false);
+            }
+            catch(e){
+    
+            }
         }
-        setInitLoading(false);
-        console.log(isLoggedIn);
-      },[])
+      
+        if(userId.length> 0){
+          try{
+            fetchData();
+          }
+          catch(e){
+
+          }
+        }
+        
+      },[]);
+      const subscribeHandler=()=>{
+            
+      }
       if(initLoading){
         return <Loader/>
       }
     return(
         <>
-        { showUpload && <div className={classes.uploadPage}><UploadMovie setShowUpload={setShowUpload}/></div>}
-        {showUpload && <div className={classes.backDrop} onClick={()=>setShowUpload(false)}/> }
         <div className={classes.mCont}>
             <section>
                 <img  src={imgNotFound}/>
-                <h3>name</h3>
+                <h3>{userInfo.name}</h3>
                 <p>0 subscribers</p>
+                <button onClick={subscribeHandler}>Subscribe</button>
             </section>
             <section>
             <ul>
-                <li title="Upload Movie" onClick={()=>setShowUpload(true)}>+</li>
             {movies.map((movie)=>
             <li key={movie.key} onClick={movieClickHandler}>
                     <img src={movie.picture.length > 0 ? movie.picture:imgNotFound}></img>
@@ -83,4 +88,4 @@ const Profile=()=>{
         </div></>
     )
 }
-export default Profile;
+export default PreviewProfile;

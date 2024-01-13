@@ -1,8 +1,9 @@
-import {useReducer, useState} from "react";
-import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import {useEffect, useReducer, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {Link, useNavigate} from "react-router-dom";
 import classes from "./Register.module.css";
 import { authActions, onLogin } from "../../store/auth-slice";
+import Loader from "../loader/Loader";
 
 const intilistate = {
     emailaddress: "",
@@ -33,6 +34,8 @@ function reducer(state, action) {
 const Register = () => {
     const [loginstate, setloginstate] = useState(false);
     const [useer, setuseer] = useState("");
+    const isLoggedIn=useSelector((state)=>state.auth.loggedIn);
+    const [initLoading,setInitLoading]=useState(true);
     const [state, dispatch] = useReducer(reducer, intilistate);
     const dispatchRedux = useDispatch();
     const navigate = useNavigate();
@@ -62,7 +65,17 @@ const Register = () => {
         };
         dispatch(action);
     };
-
+    useEffect(()=>{
+        if(isLoggedIn){
+          console.log(isLoggedIn);
+          navigate("/");
+        }
+        setInitLoading(false);
+        console.log(isLoggedIn);
+      },[])
+      if(initLoading){
+        return <Loader/>
+      }
 
     const onSubmit = async (e) => { //emailAdress => state.emailaddress , password => state.password
         e.preventDefault();
@@ -167,7 +180,7 @@ const Register = () => {
                 </div>
             </form>
             <div className={classes.bttmtext}>
-                <p>Only registered accounts can login.</p>
+                already have an Account? <Link to="/Login" className="text-sky-500">Login</Link>
             </div>
         </div>
     );
