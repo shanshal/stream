@@ -6,6 +6,11 @@ import { errorActions } from "../../store/error-slice";
 import { onLogin } from "../../store/auth-slice";
 import axios from 'axios';
 import Loader from "../loader/Loader";
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "../../provider/authProvider.jsx";
+
+
+
 
 const intilistate = {
     emailaddress: "",
@@ -28,18 +33,15 @@ const intilistate = {
     return newstate;
   }
 
-const Login=()=>{
-    const [loginstate,setloginstate]=useState(false);
-    const isLoggedIn=useSelector((state)=>state.auth.loggedIn);
-    const [initLoading,setInitLoading]=useState(true);
-    const[useer,setuseer]=useState("");
-    const [error,setError]=useState({
-        showError:false,
-        errorMessage:""
+
+const Login = () => {
+    const {setToken} = useAuth()
+    const [error, setError] = useState({
+        showError: false,
+        errorMessage: ""
     });
     const [state, dispatch] = useReducer(reducer, intilistate);
-    const dispatchRedux=useDispatch();
-    const navigate=useNavigate();
+
     const inputsValid = {
         emailaddress: state.emailaddress.length > 0,
         password: state.password.length > 0,
@@ -82,8 +84,29 @@ const Login=()=>{
       catch(e) {
   setLoading(false);
 
-        console.log(e);
-      }
+    const onSubmit = async (e) => { //emailAdress => state.emailaddress , password => state.password
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            let response = await fetch("http://192.168.125.225:8000/api/account/signin",
+                {
+                    method: 'POST',
+                    body: JSON.stringify(
+                        {
+                            email: state.emailaddress,
+                            password: state.password
+                        })
+                });
+            let data = await response.json();
+
+            const token = data.token.access;
+            console.log(data.token.access);
+            setToken(token);
+
+        } catch (e) {
+            setError({showError: true, errorMessage: e.title});
+        }
 
 
     }
@@ -121,47 +144,49 @@ const Login=()=>{
     }
     return (
         <div className={classes.container}>
-        <form action="" className=" form">
-          <h3>Login</h3>
-          <label className="text">
-             Email<span className={classes.star}>*</span>
-          </label>
-          <input
-            type="text"
-            placeholder=""
-            className="text"
-            name="emailaddress"
-            onChange={onChangeInput}
-            onBlur={blurHandler}
-            value={state.emailaddress}
-          />
-          {!inputsValid.emailaddress && state.emailaddresstouched && (
-            <p className={classes.errorText}>Must not be empty!</p>
-          )}
-          <label className="text">
-            Password<span className={classes.star}>*</span>
-          </label>
-          <input
-            type="password"
-            placeholder="more than 8 characters"
-            className="text"
-            name="password"
-            onChange={onChangeInput}
-            onBlur={blurHandler}
-            value={state.password}
-          />
-         
-          {!inputsValid.password && state.passwordtouched && (
-            <p className={ classes.errorText}>Password must not be empty!</p>
-          )}
-          <div className={classes.button}>
-            {" "}
-            {error.showError && <p className={classes.errorText}>{error.errorMessage}</p>}
-            <button onClick={onSubmit} disabled={!inputsValid.emailaddress || !inputsValid.password || loading}>{loading ? "Loading":"Confirm"}</button>
-          </div>
-        </form>
-        <div className={classes.bttmtext}>
-                Don't have an account? <Link to="/Register" className="text-sky-500">Register</Link>
+            <form action="" className=" form">
+                <h3>Login</h3>
+                <label className="text bg-white">
+                    Email<span className={classes.star}>*</span>
+                </label>
+                <input
+                    type="text"
+                    placeholder=""
+                    className="text"
+                    name="emailaddress"
+                    onChange={onChangeInput}
+                    onBlur={blurHandler}
+                    value={state.emailaddress}
+                />
+                {!inputsValid.emailaddress && state.emailaddresstouched && (
+                    <p className={classes.errorText}>Must not be empty!</p>
+                )}
+                <label className="text">
+                    Password<span className={classes.star}>*</span>
+                </label>
+                <input
+                    type="password"
+                    placeholder="more than 8 characters"
+                    className="text"
+                    name="password"
+                    onChange={onChangeInput}
+                    onBlur={blurHandler}
+                    value={state.password}
+                />
+
+                {!inputsValid.password && state.passwordtouched && (
+                    <p className={classes.errorText}>Password must not be empty!</p>
+                )}
+                <div className={classes.button}>
+                    {" "}
+                    {error.showError && <p className={classes.errorText}>{error.errorMessage}</p>}
+                    <button onClick={onSubmit}
+                            disabled={!inputsValid.emailaddress || !inputsValid.password}>{loading ? "Loading" : "Confirm"}</button>
+                </div>
+            </form>
+            <div className={classes.bttmtext}>
+                <p>Only registered accounts can login.</p>
+
             </div>
       </div>
     );

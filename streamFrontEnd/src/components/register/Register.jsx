@@ -2,8 +2,12 @@ import {useEffect, useReducer, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useNavigate} from "react-router-dom";
 import classes from "./Register.module.css";
+
 import { authActions, onLogin } from "../../store/auth-slice";
 import Loader from "../loader/Loader";
+
+
+import {useAuth} from "../../provider/authProvider.jsx";
 
 const intilistate = {
     emailaddress: "",
@@ -32,6 +36,7 @@ function reducer(state, action) {
 }
 
 const Register = () => {
+    const {setToken} = useAuth()
     const [loginstate, setloginstate] = useState(false);
     const [useer, setuseer] = useState("");
     const isLoggedIn=useSelector((state)=>state.auth.loggedIn);
@@ -89,14 +94,14 @@ const Register = () => {
                             contact_name: state.name,
                             email: state.emailaddress,
                             password1: state.password,
-                            password2:state.cPassword
+
+                            password2: state.password,
                         })
                 });
             let data = await response.json();
-            dispatchRedux(onLogin({name:state.name,uid:data.token.access,email:data.account.email}))
-            console.log(data);
-            setLoading(false);
-            navigate("/");
+            setToken(data.token.access)
+
+
         } catch (e) {
           console.log(e);
             setError({showError: true, errorMessage: e.TypeError});

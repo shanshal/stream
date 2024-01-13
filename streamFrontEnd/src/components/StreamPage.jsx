@@ -1,23 +1,27 @@
-import React from 'react'
+// cdimport React from 'react'
 import ReactPlayer from "react-player";
 import movie from "./movie.mp4"
 import { useNavigate } from 'react-router-dom';
 
 function StreamPage() {
+
     const navigate=useNavigate();
     const user=[];
+
+
+
     return (
         <div>
-            <div className={"flex-col flex xl:flex-row lg:flex-row md:flex-col justify-center max-h-screen"}>
+            <div className={"flex-col flex xl:flex-row lg:flex-row md:flex-row justify-center max-h-screen"}>
                 <div className={"screenSide lg:w-2/3 m-4 flex flex-col justify-evenly items-start"}>
                     <div className={"m-2 rounded-md w-full"}>
-                    <ReactPlayer
-                        url={movie}
-                        playing={true}
-                        controls={true}
-                        width={"100%"}
-                        height={"100%"}
-                    />
+                        <ReactPlayer
+                            url={movie}
+                            playing={true}
+                            controls={true}
+                            width={"100%"}
+                            height={"100%"}
+                        />
                     </div>
                     <div className={"bottomBar flex w-full bg-base-300 m-2 rounded-md"}>
                         <div className="avatar m-6">
@@ -44,7 +48,8 @@ function StreamPage() {
 
                 </div>
                 <div className={"chatSide lg:w-1/3 m-2"}>
-                    <div className={"chatBox bg-base-300 border-2 border-info rounded-md flex flex-col overflow-y-auto h-3/4 max-h-3/4"}>
+                    <div
+                        className={"chatBox bg-base-300 border-2 border-info rounded-md flex flex-col overflow-y-auto h-3/4 max-h-3/4"}>
                         <div className={"chatComponent flex-col"}>
                             <div className="chat chat-start">
                                 <div className="chat-header">
@@ -62,13 +67,16 @@ function StreamPage() {
                             </div>
                         </div>
                     </div>
-                    <div className={"bg-base-300 chatInput self-end border-2 border-info rounded-md w-full flex justify-center items-center "}>
-                        <input type="text" placeholder="Type here" className="input input-bordered input-info w-full max-w-xs" />
+                    <div
+                        className={"bg-base-300 chatInput self-end border-2 border-info rounded-md w-full flex justify-center items-center "}>
+                        <input type="text" placeholder="Type here"
+                               className="input input-bordered input-info w-full max-w-xs"/>
                         <button className="m-4 btn btn-warning btn-sm sm:btn-sm md:btn-md lg:btn-md ">Send</button>
 
                     </div>
                 </div>
             </div>
+
 
 
         </div>

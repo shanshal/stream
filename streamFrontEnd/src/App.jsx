@@ -1,6 +1,6 @@
 
 import { createBrowserRouter,RouterProvider, useLocation, useNavigate, useNavigation, useParams } from 'react-router-dom';
-
+import AuthProvider from "./provider/authProvider.jsx";
 import './App.css'
 import Root from './components/Root';
 import Home from './components/Home';
@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import StreamPage from "./components/StreamPage.jsx";
 import PreviewProfile from './components/profile/PreviewProfile.jsx';
+import Featured from "./components/Featured.jsx";
 
 
 
@@ -76,16 +77,23 @@ function App() {
          },
          {
           path:"/PreviewProfile",
-          element:<PreviewProfile/>
-         }
+          element:<PreviewProfile/>},
+    {
+             path:"/Featured",
+             element:<Featured/>
+         },
       
       
       ]}]);
   return (
     <>
-  <RouterProvider router={router}>
-  
-  </RouterProvider>
+
+        <AuthProvider>
+            <RouterProvider router={router}>
+
+            </RouterProvider>
+        </AuthProvider>
+
     </>
   )
 }
