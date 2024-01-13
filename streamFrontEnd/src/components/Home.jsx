@@ -61,7 +61,7 @@ function Home() {
                         </h1>
                     </div>
                     <div>
-                        <h2 className={"text-xl lg:text-md md:text-2xl m-3"}>
+                        <h2 className={"text-sm lg:text-md md:text-2xl m-3"}>
                             A place to stream your favorite movies with your friends!
                         </h2>
                     </div>
@@ -73,8 +73,8 @@ function Home() {
                 </div>
             </div>
 
-            <div className={"lg:w-1/2 w-1/4 absolute top-0 right-0 h-full"}>
-                <div className={"flex flex-col items-center justify-center h-full"}>
+            <div className={"lg:w-1/2 w-1/2 absolute top-0 right-0 h-full"}>
+                <div className={"flex flex-col items-center justify-center h-full wra["}>
                     <div>
                         <h1 className={"lg:text-2xl text-md md:text-lg m-3"}>
                             Make an account and open up your own online theater!
@@ -82,7 +82,7 @@ function Home() {
                     </div>
                     <div>
                         <button
-                            className={"btn btn-wide btn-xs sm:btn-sm md:btn-md lg:btn-lg hover:glass"}
+                            className={"btn lg:btn-wide btn-sm sm:btn-sm md:btn-md lg:btn-lg hover:glass"}
                             onClick={() => {
                                 console.log("Get Started button clicked");
                             }}
