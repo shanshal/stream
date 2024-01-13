@@ -10,7 +10,6 @@ import {useEffect, useState} from "react";
 import axios from 'axios';
 import Loader from "./loader/Loader.jsx";
 
-=======
 
 import {useAuth} from "../provider/authProvider.jsx";
 

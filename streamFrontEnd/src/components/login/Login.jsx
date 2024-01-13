@@ -6,7 +6,6 @@ import { errorActions } from "../../store/error-slice";
 import { onLogin } from "../../store/auth-slice";
 import axios from 'axios';
 import Loader from "../loader/Loader";
-import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../provider/authProvider.jsx";
 
 
@@ -65,130 +64,130 @@ const Login = () => {
     };
  
 
-    const onSubmit=async (e)=>{ //emailAdress => state.emailaddress , password => state.password
-      e.preventDefault(); 
-      setLoading(true);     
-      
-      try{
-        const response = await axios.post('http://192.168.125.225:8000/api/account/signin', {
-                email: state.emailaddress,
-                  password: state.password,
-      })
-      const data = response.data;
-      dispatchRedux(onLogin({uid:data.token.access,email:data.account.email}))
-      console.log(data.token.access)
-      const token = data.token.access;
-      localStorage.setItem("token", token);
-      navigate("/");
-      }
-      catch(e) {
-  setLoading(false);
-
-    const onSubmit = async (e) => { //emailAdress => state.emailaddress , password => state.password
+    const onSubmit=async (e)=> { //emailAdress => state.emailaddress , password => state.password
         e.preventDefault();
         setLoading(true);
 
         try {
-            let response = await fetch("http://192.168.125.225:8000/api/account/signin",
-                {
-                    method: 'POST',
-                    body: JSON.stringify(
-                        {
-                            email: state.emailaddress,
-                            password: state.password
-                        })
-                });
-            let data = await response.json();
-
+            const response = await axios.post('http://192.168.125.225:8000/api/account/signin', {
+                email: state.emailaddress,
+                password: state.password,
+            })
+            const data = response.data;
+            dispatchRedux(onLogin({uid: data.token.access, email: data.account.email}))
+            console.log(data.token.access)
             const token = data.token.access;
-            console.log(data.token.access);
-            setToken(token);
-
+            localStorage.setItem("token", token);
+            navigate("/");
         } catch (e) {
-            setError({showError: true, errorMessage: e.title});
-        }
+            setLoading(false);
+
+            const onSubmit = async (e) => { //emailAdress => state.emailaddress , password => state.password
+                e.preventDefault();
+                setLoading(true);
+
+                try {
+                    let response = await fetch("http://192.168.125.225:8000/api/account/signin",
+                        {
+                            method: 'POST',
+                            body: JSON.stringify(
+                                {
+                                    email: state.emailaddress,
+                                    password: state.password
+                                })
+                        });
+                    let data = await response.json();
+
+                    const token = data.token.access;
+                    console.log(data.token.access);
+                    setToken(token);
+
+                } catch (e) {
+                    setError({showError: true, errorMessage: e.title});
+                }
 
 
-    }
-    // try{
-    //   const result= await fetch("http://172.20.10.5:8000/api/account/signin",
-    //   {
-    //       method: 'POST',
-    //       body: JSON.stringify(
-    //           {
-    //               email: state.emailaddress,
-    //               password: state.password,
-    //           })
-    //   });
-    //   let data = await response.json();
-    //   dispatchRedux(onLogin({uid:data.token.access,email:data.account.email}))
-    //     }
-    //   catch(e){
-    //     setError({showError:true,errorMessage:e.title});
-    //     setLoading(false);
-    //   }
-   
-          
-    //   }
-      
-    useEffect(()=>{
-      if(isLoggedIn){
-        console.log(isLoggedIn);
-        navigate("/");
-      }
-      setInitLoading(false);
-      console.log(isLoggedIn);
-    },[])
-    if(initLoading){
-      return <Loader/>
-    }
-    return (
-        <div className={classes.container}>
-            <form action="" className=" form">
-                <h3>Login</h3>
-                <label className="text bg-white">
-                    Email<span className={classes.star}>*</span>
-                </label>
-                <input
-                    type="text"
-                    placeholder=""
-                    className="text"
-                    name="emailaddress"
-                    onChange={onChangeInput}
-                    onBlur={blurHandler}
-                    value={state.emailaddress}
-                />
-                {!inputsValid.emailaddress && state.emailaddresstouched && (
-                    <p className={classes.errorText}>Must not be empty!</p>
-                )}
-                <label className="text">
-                    Password<span className={classes.star}>*</span>
-                </label>
-                <input
-                    type="password"
-                    placeholder="more than 8 characters"
-                    className="text"
-                    name="password"
-                    onChange={onChangeInput}
-                    onBlur={blurHandler}
-                    value={state.password}
-                />
+            }
+            // try{
+            //   const result= await fetch("http://172.20.10.5:8000/api/account/signin",
+            //   {
+            //       method: 'POST',
+            //       body: JSON.stringify(
+            //           {
+            //               email: state.emailaddress,
+            //               password: state.password,
+            //           })
+            //   });
+            //   let data = await response.json();
+            //   dispatchRedux(onLogin({uid:data.token.access,email:data.account.email}))
+            //     }
+            //   catch(e){
+            //     setError({showError:true,errorMessage:e.title});
+            //     setLoading(false);
+            //   }
 
-                {!inputsValid.password && state.passwordtouched && (
-                    <p className={classes.errorText}>Password must not be empty!</p>
-                )}
-                <div className={classes.button}>
-                    {" "}
-                    {error.showError && <p className={classes.errorText}>{error.errorMessage}</p>}
-                    <button onClick={onSubmit}
-                            disabled={!inputsValid.emailaddress || !inputsValid.password}>{loading ? "Loading" : "Confirm"}</button>
+
+            //   }
+
+            useEffect(() => {
+                if (isLoggedIn) {
+                    console.log(isLoggedIn);
+                    navigate("/");
+                }
+                setInitLoading(false);
+                console.log(isLoggedIn);
+            }, [])
+            if (initLoading) {
+                return <Loader/>
+            }
+            return (
+                <div className={classes.container}>
+                    <form action="" className=" form">
+                        <h3>Login</h3>
+                        <label className="text bg-white">
+                            Email<span className={classes.star}>*</span>
+                        </label>
+                        <input
+                            type="text"
+                            placeholder=""
+                            className="text"
+                            name="emailaddress"
+                            onChange={onChangeInput}
+                            onBlur={blurHandler}
+                            value={state.emailaddress}
+                        />
+                        {!inputsValid.emailaddress && state.emailaddresstouched && (
+                            <p className={classes.errorText}>Must not be empty!</p>
+                        )}
+                        <label className="text">
+                            Password<span className={classes.star}>*</span>
+                        </label>
+                        <input
+                            type="password"
+                            placeholder="more than 8 characters"
+                            className="text"
+                            name="password"
+                            onChange={onChangeInput}
+                            onBlur={blurHandler}
+                            value={state.password}
+                        />
+
+                        {!inputsValid.password && state.passwordtouched && (
+                            <p className={classes.errorText}>Password must not be empty!</p>
+                        )}
+                        <div className={classes.button}>
+                            {" "}
+                            {error.showError && <p className={classes.errorText}>{error.errorMessage}</p>}
+                            <button onClick={onSubmit}
+                                    disabled={!inputsValid.emailaddress || !inputsValid.password}>{loading ? "Loading" : "Confirm"}</button>
+                        </div>
+                    </form>
+                    <div className={classes.bttmtext}>
+                        <p>Only registered accounts can login.</p>
+
+                    </div>
                 </div>
-            </form>
-            <div className={classes.bttmtext}>
-                <p>Only registered accounts can login.</p>
-
-            </div>
-      </div>
-    );
-}
+            );
+        }
+    }}
 export default Login;
