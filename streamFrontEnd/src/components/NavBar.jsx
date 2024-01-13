@@ -18,7 +18,7 @@ function NavBar() {
                         className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                         <li><Link to="/">Home</Link></li>
                         <li><Link to={"/StreamPage"}>Profile</Link></li>
-                        <li><a href={"#"}>Movies</a></li>
+                        <li><Link to="/Movies">Movies</Link></li>
                     </ul>
 
                 </div>

@@ -67,7 +67,7 @@ function App() {
       },{
         path:"/Profile",
         element:<Profile/>
-      }
+      },
 
          {
              path:"/StreamPage",
