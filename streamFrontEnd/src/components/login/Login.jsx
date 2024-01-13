@@ -3,6 +3,9 @@ import {useDispatch} from 'react-redux';
 import classes from "./Login.module.css";
 import {useNavigate} from "react-router-dom";
 import {errorActions} from "../../store/error-slice";
+import {useAuth} from "../../provider/authProvider.jsx";
+
+
 
 const intilistate = {
     emailaddress: "",
@@ -27,15 +30,12 @@ function reducer(state, action) {
 }
 
 const Login = () => {
-    const [loginstate, setloginstate] = useState(false);
-    const [useer, setuseer] = useState("");
+    const {setToken} = useAuth()
     const [error, setError] = useState({
         showError: false,
         errorMessage: ""
     });
     const [state, dispatch] = useReducer(reducer, intilistate);
-    const dispatchRedux = useDispatch();
-    const navigate = useNavigate();
     const inputsValid = {
         emailaddress: state.emailaddress.length > 0,
         password: state.password.length > 0,
@@ -65,7 +65,7 @@ const Login = () => {
         setLoading(true);
 
         try {
-            let response = await fetch("http://172.20.10.5:8000/api/account/signin",
+            let response = await fetch("http://192.168.125.225:8000/api/account/signin",
                 {
                     method: 'POST',
                     body: JSON.stringify(
@@ -75,7 +75,10 @@ const Login = () => {
                         })
                 });
             let data = await response.json();
-            console.log(data);
+
+            const token = data.token.access;
+            console.log(data.token.access);
+            setToken(token);
 
         } catch (e) {
             setError({showError: true, errorMessage: e.title});
