@@ -65,7 +65,7 @@ const Login = () => {
         setLoading(true);
 
         try {
-            let response = await fetch("http://192.168.125.225:8000/api/account/signin",
+            let response = await fetch("http://172.20.10.5:8000/api/account/signin",
                 {
                     method: 'POST',
                     body: JSON.stringify(
@@ -89,51 +89,53 @@ const Login = () => {
 
 
     return (
-        <div className={classes.container}>
-            <form action="" className=" form">
-                <h1 className={"text-4xl text-black text-center" }>
-                    Login
-                </h1>
-                <label className="text bg-white">
-                    Email<span className={classes.star}>*</span>
-                </label>
-                <input
-                    type="text"
-                    placeholder=""
-                    className="text"
-                    name="emailaddress"
-                    onChange={onChangeInput}
-                    onBlur={blurHandler}
-                    value={state.emailaddress}
-                />
-                {!inputsValid.emailaddress && state.emailaddresstouched && (
-                    <p className={classes.errorText}>Must not be empty!</p>
-                )}
-                <label className="text">
-                    Password<span className={classes.star}>*</span>
-                </label>
-                <input
-                    type="password"
-                    placeholder="more than 8 characters"
-                    className="text"
-                    name="password"
-                    onChange={onChangeInput}
-                    onBlur={blurHandler}
-                    value={state.password}
-                />
+        <div className={"w-full"}>
+            <div className="hero min-h-screen bg-base-200">
+                <div className="hero-content flex-col lg:flex-row-reverse">
+                    <div className="text-center lg:text-left">
+                        <h1 className="text-5xl font-bold text-primary ">Login now!</h1>
+                        <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi
+                            exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+                    </div>
+                    <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                        <form className="card-body">
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text text-primary">Email</span>
+                                </label>
+                                <input type="email"
+                                       placeholder="email"
+                                       className="input input-bordered"
+                                       required
+                                       name="emailaddress"
+                                       onChange={onChangeInput}
+                                       onBlur={blurHandler}
+                                       value={state.emailaddress}/>
+                                {!inputsValid.emailaddress && state.emailaddresstouched && (
+                                    <p className={"text-secondary"}>Must not be empty!</p>
+                                )}
 
-                {!inputsValid.password && state.passwordtouched && (
-                    <p className={classes.errorText}>Password must not be empty!</p>
-                )}
-                <div className={classes.button}>
-                    {" "}
-                    {error.showError && <p className={classes.errorText}>{error.errorMessage}</p>}
-                    <button onClick={onSubmit}
-                            disabled={!inputsValid.emailaddress || !inputsValid.password}>{loading ? "Loading" : "Confirm"}</button>
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text text-primary">Password</span>
+                                </label>
+                                <input type="password" placeholder="password" className="input input-bordered" required name="password" onChange={onChangeInput}
+                                       onBlur={blurHandler} value={state.password}/>
+                                {!inputsValid.password && state.passwordtouched && (
+                                    <p className={"text-secondary"}>Password must not be empty!</p>
+                                )}
+                            </div>
+                            <div className="form-control mt-6">
+                                <button className="btn btn-primary"
+                                        onClick={onSubmit}
+                                        disabled={!inputsValid.emailaddress || !inputsValid.password}>
+                                    Login
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </form>
-            <div className={classes.bttmtext}>
-                <p>Only registered accounts can login.</p>
             </div>
         </div>
     );

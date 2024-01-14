@@ -11,6 +11,7 @@ import Featured from "./components/Featured.jsx";
 import Profile from "./components/profile/Profile.jsx";
 
 
+
 function App() {
   const router=createBrowserRouter([
     {
@@ -49,7 +50,6 @@ function App() {
 
         <AuthProvider>
             <RouterProvider router={router}>
-
             </RouterProvider>
         </AuthProvider>
 
