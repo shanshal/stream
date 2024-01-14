@@ -1,10 +1,9 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
-import imgNotFound from "../../images/fileNotFound.jpg";
+import imgNotFound from "../../assets/placeholder.jpg";
 import classes from "./Profile.module.css"
 import { useNavigate } from "react-router-dom";
 import UploadMovie from "./UploadMovie";
 import { useSelector } from "react-redux";
-import Loader from "../loader/Loader";
 const locmovies=[
     {
         name:"star wars",
@@ -56,9 +55,7 @@ const Profile=()=>{
         setInitLoading(false);
         console.log(isLoggedIn);
       },[])
-      if(initLoading){
-        return <Loader/>
-      }
+
     return(
         <>
         { showUpload && <div className={classes.uploadPage}><UploadMovie setShowUpload={setShowUpload}/></div>}
